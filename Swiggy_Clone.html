@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Order food and groceries, discover restaurants, and explore Swiggy services."
+    />
+    <title>Swiggy — Order food &amp; groceries</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --orange: #ff5200;
+        --ink: #171a29;
+        --muted: #676a6d;
+        --line: #e9e9eb;
+        --content-width: 1180px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: #fff;
+        font-family:
+          "Arial", "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #fff;
+        box-shadow: 0 3px 14px rgb(0 0 0 / 6%);
+        backdrop-filter: blur(12px);
+      }
+
+      .nav-inner {
+        width: min(var(--content-width), calc(100% - 64px));
+        min-height: 88px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex: 0 0 auto;
+        color: var(--orange);
+        text-decoration: none;
+        font-size: 27px;
+        font-weight: 800;
+        letter-spacing: -1.6px;
+      }
+
+      .brand-mark {
+        width: 39px;
+        height: 39px;
+        display: grid;
+        place-items: center;
+        border-radius: 13px 13px 13px 4px;
+        color: #fff;
+        background: var(--orange);
+        font-size: 25px;
+        line-height: 1;
+        letter-spacing: -2px;
+        transform: rotate(-5deg);
+      }
+
+      .brand-mark span {
+        transform: rotate(5deg);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: clamp(20px, 3vw, 42px);
+      }
+
+      .nav-links a {
+        color: #3d4048;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 650;
+        white-space: nowrap;
+        transition: color 160ms ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--orange);
+      }
+
+      .nav-links .app-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 12px 18px;
+        border: 1.5px solid #d5d6d9;
+        border-radius: 12px;
+      }
+
+      .app-link svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .nav-links .signin-link {
+        padding: 14px 22px;
+        border-radius: 12px;
+        color: #fff;
+        background: #171a29;
+      }
+
+      .nav-links .signin-link:hover {
+        color: #fff;
+        background: #303342;
+      }
+
+      .basket-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid #e8e8eb;
+        border-radius: 12px;
+        color: var(--ink) !important;
+        background: #fff;
+      }
+
+      .basket-link svg {
+        width: 21px;
+        height: 21px;
+      }
+
+      .basket-count {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        min-width: 19px;
+        height: 19px;
+        display: grid;
+        place-items: center;
+        padding: 0 5px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        color: #fff;
+        background: var(--orange);
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 492px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 54px 24px 64px;
+        color: white;
+        background: var(--orange);
+        isolation: isolate;
+      }
+
+      .hero::before,
+      .hero::after {
+        position: absolute;
+        z-index: -1;
+        width: 350px;
+        height: 350px;
+        border: 1px solid rgb(255 255 255 / 12%);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .hero::before {
+        top: -190px;
+        left: 18%;
+        box-shadow:
+          0 0 0 35px rgb(255 255 255 / 5%),
+          0 0 0 75px rgb(255 255 255 / 4%);
+      }
+
+      .hero::after {
+        right: 12%;
+        bottom: -240px;
+        width: 460px;
+        height: 460px;
+        box-shadow: 0 0 0 38px rgb(255 255 255 / 5%);
+      }
+
+      .hero-content {
+        width: min(760px, 100%);
+        text-align: center;
+      }
+
+      .hero h1 {
+        max-width: 760px;
+        margin: 0 auto 30px;
+        font-size: clamp(36px, 5vw, 56px);
+        font-weight: 800;
+        line-height: 1.12;
+        letter-spacing: -2px;
+      }
+
+      .hero-form {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 14px;
+      }
+
+      .field-wrap {
+        position: relative;
+      }
+
+      .field-wrap svg {
+        position: absolute;
+        top: 50%;
+        left: 18px;
+        width: 20px;
+        height: 20px;
+        color: #575b63;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      .hero-form input {
+        width: 100%;
+        height: 60px;
+        padding: 0 18px 0 50px;
+        border: 0;
+        border-radius: 14px;
+        outline: none;
+        color: #22242c;
+        background: #fff;
+        box-shadow: 0 5px 16px rgb(99 35 0 / 12%);
+        font-size: 15px;
+      }
+
+      .hero-form input::placeholder {
+        color: #74777f;
+        opacity: 1;
+      }
+
+      .hero-form input:focus {
+        box-shadow:
+          0 0 0 3px rgb(255 255 255 / 42%),
+          0 5px 16px rgb(99 35 0 / 12%);
+      }
+
+      .food-doodle {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 94px;
+        height: 94px;
+        border: 1px solid rgb(255 255 255 / 27%);
+        border-radius: 28px;
+        background: rgb(255 255 255 / 13%);
+        box-shadow: 0 12px 30px rgb(135 40 0 / 10%);
+        font-size: 52px;
+        transform: rotate(-9deg);
+      }
+
+      .food-doodle.left {
+        top: 90px;
+        left: max(4%, calc((100% - 1150px) / 2));
+      }
+
+      .food-doodle.left-small {
+        bottom: 60px;
+        left: max(12%, calc((100% - 980px) / 2));
+        width: 70px;
+        height: 70px;
+        border-radius: 23px;
+        font-size: 38px;
+        transform: rotate(8deg);
+      }
+
+      .food-doodle.right {
+        top: 76px;
+        right: max(5%, calc((100% - 1120px) / 2));
+        width: 105px;
+        height: 105px;
+        font-size: 58px;
+        transform: rotate(8deg);
+      }
+
+      .food-doodle.right-small {
+        right: max(13%, calc((100% - 970px) / 2));
+        bottom: 52px;
+        width: 68px;
+        height: 68px;
+        border-radius: 22px;
+        font-size: 36px;
+        transform: rotate(-10deg);
+      }
+
+      .services-section {
+        width: min(var(--content-width), calc(100% - 64px));
+        margin: 0 auto;
+        padding: 54px 0 70px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        font-size: clamp(24px, 3vw, 32px);
+        line-height: 1.2;
+        letter-spacing: -0.8px;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .service-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 242px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 26px 26px 22px;
+        border: 1px solid #ededf0;
+        border-radius: 20px;
+        color: var(--ink);
+        background: #fff;
+        box-shadow: 0 5px 22px rgb(20 24 40 / 5%);
+        text-decoration: none;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgb(20 24 40 / 10%);
+      }
+
+      .service-card::after {
+        position: absolute;
+        right: -40px;
+        bottom: -84px;
+        width: 210px;
+        height: 210px;
+        border-radius: 50%;
+        background: var(--card-tint);
+        content: "";
+      }
+
+      .service-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 68%;
+      }
+
+      .service-copy h3 {
+        margin: 0 0 7px;
+        font-size: 24px;
+        letter-spacing: -0.7px;
+      }
+
+      .service-copy p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .service-label {
+        display: inline-block;
+        margin-bottom: 11px;
+        color: var(--orange);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .service-art {
+        position: absolute;
+        z-index: 1;
+        right: 17px;
+        bottom: 12px;
+        width: 130px;
+        height: 130px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--card-tint);
+        font-size: 75px;
+        transform: rotate(-8deg);
+      }
+
+      .service-art.food {
+        --card-tint: #fff0e8;
+      }
+
+      .service-art.grocery {
+        --card-tint: #eef9eb;
+      }
+
+      .service-art.dine {
+        --card-tint: #fff1e9;
+      }
+
+      .service-card.food-card {
+        --card-tint: #fff8f3;
+      }
+
+      .service-card.grocery-card {
+        --card-tint: #f3faef;
+      }
+
+      .service-card.dine-card {
+        --card-tint: #fff7f1;
+      }
+
+      .browse-section {
+        width: min(var(--content-width), calc(100% - 64px));
+        margin: 0 auto;
+        padding: 8px 0 42px;
+        scroll-margin-top: 105px;
+      }
+
+      .browse-section + .browse-section {
+        padding-top: 20px;
+      }
+
+      .browse-title {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .browse-title h2 {
+        margin: 0;
+        font-size: clamp(23px, 3vw, 30px);
+        letter-spacing: -0.8px;
+      }
+
+      .browse-title p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .category-rail,
+      .product-rail {
+        display: grid;
+        grid-auto-columns: minmax(138px, 1fr);
+        grid-auto-flow: column;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 2px 2px 14px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+        scrollbar-color: #d6d6d8 transparent;
+      }
+
+      .category-tile {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 11px;
+        padding: 10px 8px 14px;
+        border-radius: 16px;
+        color: var(--ink);
+        text-align: center;
+        text-decoration: none;
+        scroll-snap-align: start;
+        transition: background-color 160ms ease;
+      }
+
+      .category-tile:hover {
+        background: #fff6f1;
+      }
+
+      .category-tile img {
+        width: 116px;
+        height: 116px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #f3f3f3;
+      }
+
+      .category-tile span {
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .restaurant-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .restaurant-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin: -2px 0 20px;
+      }
+
+      .filter-button {
+        padding: 9px 14px;
+        border: 1px solid #dedfe3;
+        border-radius: 22px;
+        color: #434650;
+        background: #fff;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 650;
+        transition:
+          color 150ms ease,
+          border-color 150ms ease,
+          background-color 150ms ease;
+      }
+
+      .filter-button:hover,
+      .filter-button[aria-pressed="true"] {
+        border-color: var(--ink);
+        color: #fff;
+        background: var(--ink);
+      }
+
+      .restaurant-empty {
+        display: none;
+        padding: 30px 18px;
+        border: 1px dashed #d9d9dd;
+        border-radius: 14px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .restaurant-empty.visible {
+        display: block;
+      }
+
+      .restaurant-card {
+        min-width: 0;
+        overflow: hidden;
+        border-radius: 18px;
+        color: var(--ink);
+        background: #fff;
+        box-shadow: 0 4px 18px rgb(20 24 40 / 8%);
+        text-decoration: none;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .restaurant-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 26px rgb(20 24 40 / 12%);
+      }
+
+      .restaurant-image {
+        position: relative;
+        height: 190px;
+        overflow: hidden;
+        background: #f2ece7;
+      }
+
+      .restaurant-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 250ms ease;
+      }
+
+      .restaurant-card:hover .restaurant-image img {
+        transform: scale(1.04);
+      }
+
+      .restaurant-image::after {
+        position: absolute;
+        inset: 45% 0 0;
+        background: linear-gradient(transparent, rgb(0 0 0 / 65%));
+        content: "";
+      }
+
+      .offer-tag {
+        position: absolute;
+        z-index: 1;
+        bottom: 13px;
+        left: 15px;
+        color: #fff;
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        text-shadow: 0 1px 5px rgb(0 0 0 / 25%);
+      }
+
+      .restaurant-info {
+        padding: 15px 16px 17px;
+      }
+
+      .restaurant-name-row,
+      .restaurant-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .restaurant-name-row h3 {
+        overflow: hidden;
+        margin: 0;
+        font-size: 18px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .rating {
+        flex: 0 0 auto;
+        padding: 4px 7px;
+        border-radius: 7px;
+        color: #fff;
+        background: #16833f;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .restaurant-meta {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .product-rail {
+        grid-auto-columns: 220px;
+        gap: 18px;
+      }
+
+      .product-card {
+        overflow: hidden;
+        border: 1px solid #ededf0;
+        border-radius: 16px;
+        background: #fff;
+        scroll-snap-align: start;
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 155px;
+        display: block;
+        object-fit: cover;
+        background: #f6f4f1;
+      }
+
+      .product-details {
+        padding: 13px 14px 15px;
+      }
+
+      .product-details h3 {
+        margin: 0 0 5px;
+        font-size: 15px;
+      }
+
+      .product-details p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .product-price {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 12px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .product-status {
+        min-height: 18px;
+        margin: 8px 0 0;
+        color: #16833f;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .app-promo {
+        position: relative;
+        overflow: hidden;
+        width: min(var(--content-width), calc(100% - 64px));
+        min-height: 235px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        margin: 14px auto 58px;
+        padding: 35px 48px;
+        border-radius: 24px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 88% 18%, rgb(255 255 255 / 12%) 0 80px, transparent 81px),
+          linear-gradient(115deg, #171a29 0%, #272a39 100%);
+      }
+
+      .app-promo::after {
+        position: absolute;
+        right: 110px;
+        bottom: -180px;
+        width: 320px;
+        height: 320px;
+        border: 1px solid rgb(255 255 255 / 12%);
+        border-radius: 50%;
+        box-shadow: 0 0 0 35px rgb(255 255 255 / 4%);
+        content: "";
+      }
+
+      .promo-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 550px;
+      }
+
+      .promo-eyebrow {
+        margin: 0 0 10px;
+        color: #ff9a6b;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      .promo-copy h2 {
+        margin: 0 0 10px;
+        font-size: clamp(26px, 3.5vw, 38px);
+        letter-spacing: -1px;
+      }
+
+      .promo-copy p:last-child {
+        margin: 0;
+        color: #d3d4d9;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .promo-art {
+        position: relative;
+        z-index: 1;
+        width: 150px;
+        height: 150px;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border: 8px solid #fff;
+        border-radius: 24px;
+        color: var(--orange);
+        background:
+          linear-gradient(90deg, transparent 45%, rgb(255 82 0 / 13%) 45% 55%, transparent 55%),
+          linear-gradient(transparent 45%, rgb(255 82 0 / 13%) 45% 55%, transparent 55%),
+          #fff4ed;
+        box-shadow: 0 12px 30px rgb(0 0 0 / 22%);
+        font-size: 48px;
+      }
+
+      .add-button {
+        padding: 7px 15px;
+        border: 1px solid #16833f;
+        border-radius: 7px;
+        color: #16833f;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .browse-divider {
+        width: min(var(--content-width), calc(100% - 64px));
+        height: 1px;
+        margin: 0 auto 34px;
+        border: 0;
+        background: var(--line);
+      }
+
+      .arrow {
+        position: absolute;
+        z-index: 2;
+        right: 22px;
+        top: 22px;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: var(--orange);
+        background: #fff;
+        font-size: 18px;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+      }
+
+      .status-message {
+        min-height: 20px;
+        margin: 13px 0 0;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .site-footer {
+        padding: 42px 24px 24px;
+        color: #d1d2d7;
+        background: #171a29;
+      }
+
+      .footer-inner {
+        width: min(var(--content-width), 100%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+        gap: 32px;
+      }
+
+      .footer-brand {
+        margin: 0 0 10px;
+        color: #fff;
+        font-size: 25px;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
+
+      .footer-about {
+        max-width: 280px;
+        margin: 0;
+        color: #aeb0b9;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .footer-column h2 {
+        margin: 3px 0 14px;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      .footer-column a {
+        display: block;
+        width: fit-content;
+        margin: 0 0 11px;
+        color: #bfc1c8;
+        text-decoration: none;
+        font-size: 13px;
+      }
+
+      .footer-column a:hover {
+        color: #fff;
+      }
+
+      .footer-bottom {
+        width: min(var(--content-width), 100%);
+        margin: 34px auto 0;
+        padding-top: 20px;
+        border-top: 1px solid rgb(255 255 255 / 14%);
+        color: #aeb0b9;
+        text-align: center;
+        font-size: 12px;
+      }
+
+      @media (max-width: 900px) {
+        .nav-inner {
+          width: calc(100% - 40px);
+          gap: 20px;
+        }
+
+        .nav-links {
+          gap: 17px;
+        }
+
+        .nav-links a {
+          font-size: 14px;
+        }
+
+        .hero {
+          min-height: 460px;
+        }
+
+        .food-doodle.left {
+          left: 4%;
+        }
+
+        .food-doodle.right {
+          right: 4%;
+        }
+
+        .service-card {
+          min-height: 225px;
+          padding: 23px 20px 20px;
+        }
+
+        .service-copy {
+          max-width: 75%;
+        }
+
+        .service-copy h3 {
+          font-size: 21px;
+        }
+
+        .service-art {
+          right: 7px;
+          bottom: 10px;
+          width: 105px;
+          height: 105px;
+          font-size: 61px;
+        }
+
+        .restaurant-grid {
+          gap: 14px;
+        }
+
+        .restaurant-image {
+          height: 150px;
+        }
+
+        .restaurant-info {
+          padding: 12px;
+        }
+
+        .restaurant-name-row h3 {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 650px) {
+        .nav-inner {
+          width: calc(100% - 32px);
+          min-height: 72px;
+        }
+
+        .brand {
+          gap: 8px;
+          font-size: 23px;
+        }
+
+        .brand-mark {
+          width: 34px;
+          height: 34px;
+          border-radius: 11px 11px 11px 4px;
+          font-size: 22px;
+        }
+
+        .nav-links {
+          gap: 10px;
+        }
+
+        .nav-links .corporate-link,
+        .nav-links .partner-link,
+        .nav-links .app-link {
+          display: none;
+        }
+
+        .basket-link {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+        }
+
+        .nav-links .signin-link {
+          padding: 11px 16px;
+          border-radius: 10px;
+        }
+
+        .hero {
+          min-height: 450px;
+          padding: 62px 20px 42px;
+        }
+
+        .hero h1 {
+          max-width: 440px;
+          margin-bottom: 24px;
+          font-size: clamp(34px, 8.6vw, 46px);
+          letter-spacing: -1.5px;
+        }
+
+        .hero-form {
+          grid-template-columns: 1fr;
+          gap: 11px;
+        }
+
+        .hero-form input {
+          height: 56px;
+        }
+
+        .food-doodle {
+          width: 58px;
+          height: 58px;
+          border-radius: 19px;
+          font-size: 32px;
+        }
+
+        .food-doodle.left {
+          top: 4px;
+          left: 7%;
+        }
+
+        .food-doodle.left-small {
+          display: none;
+        }
+
+        .food-doodle.right {
+          top: auto;
+          right: 8%;
+          bottom: 14px;
+          width: 62px;
+          height: 62px;
+          border-radius: 19px;
+          font-size: 35px;
+        }
+
+        .food-doodle.right-small {
+          display: none;
+        }
+
+        .status-message {
+          margin-top: 10px;
+          font-size: 12px;
+        }
+
+        .services-section {
+          width: calc(100% - 36px);
+          padding: 38px 0 48px;
+        }
+
+        .section-heading {
+          display: block;
+          margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+          margin-bottom: 7px;
+        }
+
+        .service-grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+
+        .service-card {
+          min-height: 190px;
+          padding: 22px;
+        }
+
+        .service-copy {
+          max-width: 65%;
+        }
+
+        .service-copy h3 {
+          font-size: 22px;
+        }
+
+        .service-art {
+          right: 18px;
+          bottom: 12px;
+          width: 112px;
+          height: 112px;
+          font-size: 65px;
+        }
+
+        .browse-section {
+          width: calc(100% - 36px);
+          padding: 10px 0 32px;
+        }
+
+        .browse-section + .browse-section {
+          padding-top: 14px;
+        }
+
+        .browse-title {
+          display: block;
+          margin-bottom: 15px;
+        }
+
+        .browse-title h2 {
+          margin-bottom: 6px;
+        }
+
+        .category-rail {
+          grid-auto-columns: 104px;
+          gap: 10px;
+        }
+
+        .category-tile {
+          gap: 8px;
+          padding: 8px 3px 12px;
+        }
+
+        .category-tile img {
+          width: 88px;
+          height: 88px;
+        }
+
+        .category-tile span {
+          font-size: 13px;
+        }
+
+        .restaurant-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .restaurant-image {
+          height: 190px;
+        }
+
+        .product-rail {
+          grid-auto-columns: minmax(190px, 68vw);
+        }
+
+        .browse-divider {
+          width: calc(100% - 36px);
+          margin-bottom: 27px;
+        }
+
+        .app-promo {
+          width: calc(100% - 36px);
+          min-height: 210px;
+          gap: 15px;
+          margin: 8px auto 38px;
+          padding: 25px 22px;
+          border-radius: 20px;
+        }
+
+        .promo-art {
+          width: 86px;
+          height: 86px;
+          flex-basis: 86px;
+          border-width: 5px;
+          border-radius: 17px;
+          font-size: 33px;
+        }
+
+        .promo-copy p:last-child {
+          font-size: 13px;
+        }
+
+        .footer-inner {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 25px 18px;
+        }
+
+        .footer-inner > :first-child {
+          grid-column: 1 / -1;
+        }
+
+        .site-footer {
+          padding: 32px 22px 20px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .app-promo {
+          align-items: flex-start;
+        }
+
+        .promo-art {
+          width: 66px;
+          height: 66px;
+          flex-basis: 66px;
+          font-size: 26px;
+        }
+      }
+
+      :focus-visible {
+        outline: 3px solid #ff8a55;
+        outline-offset: 3px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav-inner" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="Swiggy home">
+          <span class="brand-mark" aria-hidden="true"><span>S</span></span>
+          <span>Swiggy</span>
+        </a>
+        <div class="nav-links">
+          <a class="corporate-link" href="#services">Swiggy Corporate</a>
+          <a class="partner-link" href="#services">Partner with us</a>
+          <a class="app-link" href="#services">
+            Get the App
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+          <a class="basket-link" href="#instamart" aria-label="Your basket, 0 items">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 8h16l-1.5 12h-13L4 8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+              <path d="m8 8 4-5 4 5M9 12v4m6-4v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="basket-count" id="basket-count" aria-hidden="true">0</span>
+          </a>
+          <a class="signin-link" href="#signin" id="sign-in">Sign In</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="food-doodle left" aria-hidden="true">🍔</div>
+        <div class="food-doodle left-small" aria-hidden="true">🍜</div>
+        <div class="food-doodle right" aria-hidden="true">🛍️</div>
+        <div class="food-doodle right-small" aria-hidden="true">🍕</div>
+        <div class="hero-content">
+          <h1 id="hero-title">
+            Order food &amp; groceries.<br />
+            Discover best restaurants.<br />
+            Swiggy it!
+          </h1>
+          <form class="hero-form" id="search-form">
+            <label class="field-wrap">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 10.2c0 5.2-8 11-8 11s-8-5.8-8-11a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8" />
+              </svg>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                autocomplete="street-address"
+                placeholder="Enter your delivery location"
+                aria-label="Delivery location"
+              />
+            </label>
+            <label class="field-wrap">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8" />
+                <path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              </svg>
+              <input
+                id="query"
+                name="query"
+                type="search"
+                placeholder="Search for restaurant, item or more"
+                aria-label="Search restaurants and food"
+              />
+            </label>
+          </form>
+          <p class="status-message" id="search-message" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="services-section" id="services" aria-labelledby="services-title">
+        <div class="section-heading">
+          <h2 id="services-title">There's something for everyone</h2>
+          <p>One app for all your everyday plans.</p>
+        </div>
+        <div class="service-grid">
+          <a class="service-card food-card" href="#food-delivery">
+            <span class="arrow" aria-hidden="true">↗</span>
+            <div class="service-copy">
+              <span class="service-label">Delivered to your door</span>
+              <h3>Food Delivery</h3>
+              <p>Your favourites, freshly made and delivered fast.</p>
+            </div>
+            <span class="service-art food" role="img" aria-label="Burger and fries">🍟</span>
+          </a>
+          <a class="service-card grocery-card" href="#instamart">
+            <span class="arrow" aria-hidden="true">↗</span>
+            <div class="service-copy">
+              <span class="service-label">Groceries in minutes</span>
+              <h3>Instamart</h3>
+              <p>Daily essentials and more, right when you need them.</p>
+            </div>
+            <span class="service-art grocery" role="img" aria-label="Grocery bag">🛒</span>
+          </a>
+          <a class="service-card dine-card" href="#dineout">
+            <span class="arrow" aria-hidden="true">↗</span>
+            <div class="service-copy">
+              <span class="service-label">Make plans, go out</span>
+              <h3>Dineout</h3>
+              <p>Discover great restaurants and enjoy a meal out.</p>
+            </div>
+            <span class="service-art dine" role="img" aria-label="Restaurant meal">🍽️</span>
+          </a>
+        </div>
+      </section>
+
+      <hr class="browse-divider" />
+
+      <section class="browse-section" aria-labelledby="categories-title">
+        <div class="browse-title">
+          <h2 id="categories-title">What's on your mind?</h2>
+          <p>Pick a craving and find your next favourite.</p>
+        </div>
+        <div class="category-rail" aria-label="Browse food categories">
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Juicy burger" loading="lazy" />
+            <span>Burgers</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Freshly baked pizza" loading="lazy" />
+            <span>Pizza</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Bowl of biryani" loading="lazy" />
+            <span>Biryani</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Crispy dosa" loading="lazy" />
+            <span>Dosa</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Pasta with herbs" loading="lazy" />
+            <span>Pasta</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Chocolate cake" loading="lazy" />
+            <span>Desserts</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Assorted sushi" loading="lazy" />
+            <span>Sushi</span>
+          </a>
+          <a class="category-tile" href="#restaurants">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&amp;fit=crop&amp;w=280&amp;h=280&amp;q=80" alt="Colorful salad bowl" loading="lazy" />
+            <span>Healthy</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="browse-section" id="restaurants" aria-labelledby="restaurants-title">
+        <div class="browse-title">
+          <h2 id="restaurants-title">Popular near you</h2>
+          <p>Local favourites worth ordering again.</p>
+        </div>
+        <div class="restaurant-filters" aria-label="Filter restaurants">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-button" type="button" data-filter="offers" aria-pressed="false">Offers</button>
+          <button class="filter-button" type="button" data-filter="top-rated" aria-pressed="false">Top rated</button>
+        </div>
+        <div class="restaurant-grid">
+          <a class="restaurant-card" href="#search-form">
+            <div class="restaurant-image">
+              <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&amp;fit=crop&amp;w=760&amp;h=450&amp;q=85" alt="Grilled food served at a restaurant" loading="lazy" />
+              <span class="offer-tag">50% OFF UP TO ₹100</span>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-name-row">
+                <h3>Spice Route Kitchen</h3>
+                <span class="rating">★ 4.4</span>
+              </div>
+              <div class="restaurant-meta">
+                <span>North Indian, Biryani</span>
+                <span>25–30 min</span>
+              </div>
+            </div>
+          </a>
+          <a class="restaurant-card" href="#search-form">
+            <div class="restaurant-image">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&amp;fit=crop&amp;w=760&amp;h=450&amp;q=85" alt="Pizza fresh from the oven" loading="lazy" />
+              <span class="offer-tag">FLAT 20% OFF</span>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-name-row">
+                <h3>Crust &amp; Craft</h3>
+                <span class="rating">★ 4.2</span>
+              </div>
+              <div class="restaurant-meta">
+                <span>Pizza, Italian</span>
+                <span>20–25 min</span>
+              </div>
+            </div>
+          </a>
+          <a class="restaurant-card" href="#search-form">
+            <div class="restaurant-image">
+              <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&amp;fit=crop&amp;w=760&amp;h=450&amp;q=85" alt="Warm and inviting restaurant interior" loading="lazy" />
+              <span class="offer-tag">BUY 1 GET 1</span>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-name-row">
+                <h3>The Green Bowl</h3>
+                <span class="rating">★ 4.6</span>
+              </div>
+              <div class="restaurant-meta">
+                <span>Healthy, Salads</span>
+                <span>30–35 min</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <p class="restaurant-empty" id="restaurant-empty">No restaurants match that search. Try another dish or cuisine.</p>
+      </section>
+
+      <hr class="browse-divider" />
+
+      <section class="browse-section" id="instamart" aria-labelledby="instamart-title">
+        <div class="browse-title">
+          <h2 id="instamart-title">Everyday essentials, delivered</h2>
+          <p>Stock up on the little things you love.</p>
+        </div>
+        <div class="product-rail" aria-label="Popular grocery items">
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&amp;fit=crop&amp;w=500&amp;h=360&amp;q=80" alt="Fresh red apples" loading="lazy" />
+            <div class="product-details">
+              <h3>Fresh apples</h3>
+              <p>Seasonal produce · 4 pcs</p>
+              <div class="product-price"><span>₹129</span><button class="add-button" type="button" aria-label="Add fresh apples">Add</button></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&amp;fit=crop&amp;w=500&amp;h=360&amp;q=80" alt="Bottle of fresh milk" loading="lazy" />
+            <div class="product-details">
+              <h3>Farm fresh milk</h3>
+              <p>Daily dairy · 1 litre</p>
+              <div class="product-price"><span>₹69</span><button class="add-button" type="button" aria-label="Add farm fresh milk">Add</button></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&amp;fit=crop&amp;w=500&amp;h=360&amp;q=80" alt="Fresh green vegetables" loading="lazy" />
+            <div class="product-details">
+              <h3>Garden salad mix</h3>
+              <p>Washed &amp; ready · 200 g</p>
+              <div class="product-price"><span>₹89</span><button class="add-button" type="button" aria-label="Add garden salad mix">Add</button></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&amp;fit=crop&amp;w=500&amp;h=360&amp;q=80" alt="Freshly baked bread loaf" loading="lazy" />
+            <div class="product-details">
+              <h3>Whole wheat bread</h3>
+              <p>Bakery fresh · 400 g</p>
+              <div class="product-price"><span>₹55</span><button class="add-button" type="button" aria-label="Add whole wheat bread">Add</button></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&amp;fit=crop&amp;w=500&amp;h=360&amp;q=80" alt="Yogurt with fresh fruit" loading="lazy" />
+            <div class="product-details">
+              <h3>Greek yogurt</h3>
+              <p>High protein · 400 g</p>
+              <div class="product-price"><span>₹110</span><button class="add-button" type="button" aria-label="Add Greek yogurt">Add</button></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&amp;fit=crop&amp;w=500&amp;h=360&amp;q=80" alt="Packaged orange juice" loading="lazy" />
+            <div class="product-details">
+              <h3>Orange juice</h3>
+              <p>100% fruit · 1 litre</p>
+              <div class="product-price"><span>₹149</span><button class="add-button" type="button" aria-label="Add orange juice">Add</button></div>
+            </div>
+          </article>
+        </div>
+        <p class="product-status" id="product-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="app-promo" aria-labelledby="promo-title">
+        <div class="promo-copy">
+          <p class="promo-eyebrow">Good things are a tap away</p>
+          <h2 id="promo-title">Your favourites, all in one app.</h2>
+          <p>Discover local restaurants, get groceries in a flash, and make every meal a little easier.</p>
+        </div>
+        <div class="promo-art" aria-label="Swiggy app icon" role="img">🥡</div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-brand">Swiggy</p>
+          <p class="footer-about">Bringing great food, groceries, and everyday convenience a little closer.</p>
+        </div>
+        <div class="footer-column">
+          <h2>Explore</h2>
+          <a href="#services">Our services</a>
+          <a href="#restaurants">Popular restaurants</a>
+          <a href="#instamart">Instamart picks</a>
+        </div>
+        <div class="footer-column">
+          <h2>For you</h2>
+          <a href="#categories-title">Browse cuisines</a>
+          <a href="#search-form">Find food</a>
+          <a href="#promo-title">Get the app</a>
+        </div>
+        <div class="footer-column">
+          <h2>Discover</h2>
+          <a href="#services">Swiggy Corporate</a>
+          <a href="#services">Partner with us</a>
+          <a href="#sign-in">Sign in</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Swiggy. Made for good food days.</div>
+    </footer>
+
+    <script>
+      const searchForm = document.querySelector("#search-form");
+      const searchMessage = document.querySelector("#search-message");
+      const locationInput = document.querySelector("#location");
+      const queryInput = document.querySelector("#query");
+      const restaurantCards = [...document.querySelectorAll(".restaurant-card")];
+      const restaurantEmpty = document.querySelector("#restaurant-empty");
+      let activeRestaurantFilter = "all";
+
+      function updateRestaurantResults() {
+        const searchTerm = queryInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        restaurantCards.forEach((card) => {
+          const matchesSearch = !searchTerm || card.textContent.toLowerCase().includes(searchTerm);
+          const matchesFilter =
+            activeRestaurantFilter === "all" ||
+            (activeRestaurantFilter === "offers" && card.querySelector(".offer-tag")) ||
+            (activeRestaurantFilter === "top-rated" && Number(card.querySelector(".rating").textContent.replace(/[^\d.]/g, "")) >= 4.5);
+          const isVisible = matchesSearch && matchesFilter;
+          card.hidden = !isVisible;
+          if (isVisible) visibleCount += 1;
+        });
+
+        restaurantEmpty.classList.toggle("visible", visibleCount === 0);
+      }
+
+      queryInput.addEventListener("input", updateRestaurantResults);
+      updateRestaurantResults();
+
+      searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const location = locationInput.value.trim();
+        const query = queryInput.value.trim();
+
+        if (!location && !query) {
+          searchMessage.textContent = "Enter a location or a food item to get started.";
+          locationInput.focus();
+          return;
+        }
+
+        if (!location) {
+          searchMessage.textContent = "Add your delivery location to find what's nearby.";
+          locationInput.focus();
+          return;
+        }
+
+        updateRestaurantResults();
+        searchMessage.textContent = query
+          ? `Showing restaurants for ${query} near ${location}.`
+          : `Showing options near ${location}.`;
+        document.querySelector("#restaurants").scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.querySelectorAll(".filter-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeRestaurantFilter = button.dataset.filter;
+          document.querySelectorAll(".filter-button").forEach((filterButton) => {
+            filterButton.setAttribute("aria-pressed", String(filterButton === button));
+          });
+          updateRestaurantResults();
+        });
+      });
+
+      document.querySelectorAll(".category-tile").forEach((tile) => {
+        tile.addEventListener("click", () => {
+          queryInput.value = tile.querySelector("span").textContent;
+          activeRestaurantFilter = "all";
+          document.querySelectorAll(".filter-button").forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.dataset.filter === "all"));
+          });
+          updateRestaurantResults();
+        });
+      });
+
+      document.querySelector("#sign-in").addEventListener("click", (event) => {
+        event.preventDefault();
+        searchMessage.textContent = "Sign in is ready to connect to your account.";
+        document.querySelector("#hero-title").scrollIntoView({ behavior: "smooth" });
+      });
+
+      let basketCount = 0;
+      document.querySelectorAll(".add-button").forEach((button) => {
+        button.setAttribute("aria-pressed", "false");
+        button.addEventListener("click", () => {
+          if (button.getAttribute("aria-pressed") === "true") return;
+
+          button.setAttribute("aria-pressed", "true");
+          button.textContent = "Added";
+          basketCount += 1;
+          const itemName = button.closest(".product-card").querySelector("h3").textContent;
+          document.querySelector("#basket-count").textContent = String(basketCount);
+          document.querySelector(".basket-link").setAttribute("aria-label", `Your basket, ${basketCount} ${basketCount === 1 ? "item" : "items"}`);
+          document.querySelector("#product-message").textContent =
+            `${itemName} added to your basket · ${basketCount} ${basketCount === 1 ? "item" : "items"}.`;
+        });
+      });
+    </script>
+  </body>
+</html>
